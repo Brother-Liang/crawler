@@ -2,7 +2,8 @@ const puppeteer = require('puppeteer');
 var name = "nike dunk";
 var newName = name.replace(" ", "%20");
 // console.log(newName);
-var i =2;
+//i 是要爬的頁數第1頁、第2頁....
+var i =1;
 var finish = true;
 async function main(newName, i) {
     finish=false;
