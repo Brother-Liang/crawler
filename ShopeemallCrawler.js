@@ -17,7 +17,7 @@ function delay(time) {
 var name = "nike dunk";
 var newName = name.replace(" ", "%20");
 //  j為第幾頁 蝦皮從0 開始
-var j = 0;
+// var j = 1;
 
 async function main(newName, j) {
     //是否要背景執行 flase 
@@ -61,7 +61,7 @@ async function main(newName, j) {
 
                 url: document.querySelector(url).href,
                 img: document.querySelector(url + "> div > div > div:nth-child(1) > div > img").src,
-                name: document.querySelector(url + "> div > div > div.KMyn8J > div.dpiR4u > div.FDn--\+ > div").innerText.replace(/"/g, ' ').replace(/[\u0800-\uFFFF]/g, ''),
+                name: document.querySelector(url + "> div > div > div.KMyn8J > div.dpiR4u > div.FDn--\\+ > div").innerText.replace(/"/g, ' ').replace(/[\u0800-\uFFFF]/g, ''),
                 price: document.querySelector(url + "> div > div > div.KMyn8J > div.hpDKMN > div.vioxXd.rVLWG6 > span.ZEgDH9").innerText.replace(",", ""),
                 source: "https://i.ibb.co/F7766Bz/image.png" 
             };
@@ -83,12 +83,15 @@ async function main(newName, j) {
 }
 
 (async () => {
-    const dataList = await main(newName, j);
-    dataList.forEach((element) => {
-        connection.query(`INSERT INTO aa (url,img,name,price,source) VALUES("${element.url}","${element.img}","${element.name}","${element.price}","${element.source}")`, function (error, results, fields) {
-            if (error) throw error;
-            console.log(results);
+    for(var j=2;j<5;j++){
+
+        const dataList = await main(newName, j);
+        dataList.forEach((element) => {
+            connection.query(`INSERT INTO itemdb (url,img,name,price,source) VALUES("${element.url}","${element.img}","${element.name}","${element.price}","${element.source}")`, function (error, results, fields) {
+                if (error) throw error;
+                console.log(results);
+            });
         });
-    });
+    }
     connection.end();
 })();
