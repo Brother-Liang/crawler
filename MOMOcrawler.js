@@ -11,7 +11,7 @@ const connection = mysql.createConnection({
 const name = "nike dunk";
 const newName = name.replace(" ", "%20");
 // i 為第幾頁 momo從1開始
-const i = 2;
+// const i = 1;
 
 function delay(time) {
     return new Promise(function (resolve) {
@@ -78,12 +78,15 @@ async function main(newName, i) {
 }
 
 (async () => {
-    const dataList = await main(newName, i);
-    dataList.forEach((element) => {
-        connection.query(`INSERT INTO aa (url,img,name,price,source) VALUES("${element.url}","${element.img}","${element.name}","${element.price}","${element.source}")`, function (error, results, fields) {
-            if (error) throw error;
-            console.log(results);
+    for(let i = 1;i<6;i++){
+
+        const dataList = await main(newName, i);
+        dataList.forEach((element) => {
+            connection.query(`INSERT INTO aa (url,img,name,price,source) VALUES("${element.url}","${element.img}","${element.name}","${element.price}","${element.source}")`, function (error, results, fields) {
+                if (error) throw error;
+                console.log(results);
+            });
         });
-    });
+    }
     connection.end();
 })();

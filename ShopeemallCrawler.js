@@ -83,7 +83,7 @@ async function main(newName, j) {
 }
 
 (async () => {
-    for(var j=2;j<5;j++){
+    for(let j=0;j<5;j++){
 
         const dataList = await main(newName, j);
         dataList.forEach((element) => {
