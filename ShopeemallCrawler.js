@@ -14,7 +14,7 @@ function delay(time) {
     });
 };
 
-var name = "nike dunk";
+var name = "nike Air Max";
 var newName = name.replace(" ", "%20");
 //  j為第幾頁 蝦皮從0 開始
 // var j = 1;
@@ -84,7 +84,7 @@ async function main(newName, j) {
 
 (async () => {
     //  j為第幾頁 蝦皮從0 開始到第4頁
-    for(let j=0;j<5;j++){
+    for(let j=0;j<1;j++){
 
         const dataList = await main(newName, j);
         dataList.forEach((element) => {

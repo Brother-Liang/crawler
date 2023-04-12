@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
     database: 'item',
 });
 
-const name = "nike dunk";
+const name = "nike airmax97";
 const newName = name.replace(" ", "%20");
 // i 為第幾頁 momo從1開始
 // const i = 1;
@@ -78,11 +78,11 @@ async function main(newName, i) {
 }
 
 (async () => {
-    for(let i = 1;i<6;i++){
+    for(let i = 1;i<2;i++){
 
         const dataList = await main(newName, i);
         dataList.forEach((element) => {
-            connection.query(`INSERT INTO aa (url,img,name,price,source) VALUES("${element.url}","${element.img}","${element.name}","${element.price}","${element.source}")`, function (error, results, fields) {
+            connection.query(`INSERT INTO itemdb (url,img,name,price,source) VALUES("${element.url}","${element.img}","${element.name}","${element.price}","${element.source}")`, function (error, results, fields) {
                 if (error) throw error;
                 console.log(results);
             });
