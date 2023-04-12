@@ -83,6 +83,7 @@ async function main(newName, j) {
 }
 
 (async () => {
+    //  j為第幾頁 蝦皮從0 開始到第4頁
     for(let j=0;j<5;j++){
 
         const dataList = await main(newName, j);
