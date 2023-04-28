@@ -14,7 +14,7 @@ function delay(time) {
     });
 };
 
-var name = "nike Air Max";
+var name = "nike Air force"; // Air Max 、dunk 、air force、Air jordan
 var newName = name.replace(" ", "%20");
 //  j為第幾頁 蝦皮從0 開始
 // var j = 1;
@@ -29,9 +29,24 @@ async function main(newName, j) {
     //去某某網站
     let shopurl = "https://shopee.tw/mall/search?keyword=" + newName + "&page=" + j;
 
-    await page.goto(shopurl, { waitUntil: 'networkidle2' });
+    await page.goto(shopurl, { waitUntil: 'networkidle2' }); 
+    // await page.goto(shopurl, {
+    //     ignoreHTTPSErrors: true,
+    //     timeout: 0,
+    //     waitUntil: 'networkidle0',
+    //     args: [
+    //         '--no-sandbox',
+    //         '--disable-setuid-sandbox',
+    //         '--disable-dev-shm-usage',
+    //         '--disable-accelerated-2d-canvas',
+    //         '--disable-gpu'
+    //     ]
+    // });
 
-    await delay(1000);
+    //
+
+
+    await delay(20000);
     const elem = await page.$('div');
     const boundingBox = await elem.boundingBox();
     await page.mouse.move(
@@ -56,14 +71,15 @@ async function main(newName, j) {
         for (let i = 1; i <= 60; i++) {
 
             let url = "#main > div > div.dYFPlI > div > div > div.sdzgsX > div > div.row.shopee-search-item-result__items > div:nth-child(" + i + ") > a ";
-            
+
             var newsItem = {
 
                 url: document.querySelector(url).href,
                 img: document.querySelector(url + "> div > div > div:nth-child(1) > div > img").src,
                 name: document.querySelector(url + "> div > div > div.KMyn8J > div.dpiR4u > div.FDn--\\+ > div").innerText.replace(/"/g, ' ').replace(/[\u0800-\uFFFF]/g, ''),
                 price: document.querySelector(url + "> div > div > div.KMyn8J > div.hpDKMN > div.vioxXd.rVLWG6 > span.ZEgDH9").innerText.replace(",", ""),
-                source: "https://i.ibb.co/F7766Bz/image.png" 
+                source: "https://i.ibb.co/F7766Bz/image.png",
+                subtitle: ""
             };
             result.push(newsItem);
 
@@ -83,12 +99,12 @@ async function main(newName, j) {
 }
 
 (async () => {
-    //  j為第幾頁 蝦皮從0 開始到第4頁
-    for(let j=0;j<1;j++){
+    //  j為第幾頁 蝦皮從0 開始到第?頁
+    for (let j = 0; j < 1; j++) {
 
         const dataList = await main(newName, j);
         dataList.forEach((element) => {
-            connection.query(`INSERT INTO itemdb (url,img,name,price,source) VALUES("${element.url}","${element.img}","${element.name}","${element.price}","${element.source}")`, function (error, results, fields) {
+            connection.query(`INSERT INTO shoes (url,img,name,price,source) VALUES("${element.url}","${element.img}","${element.name}","${element.price}","${element.source}")`, function (error, results, fields) {
                 if (error) throw error;
                 console.log(results);
             });

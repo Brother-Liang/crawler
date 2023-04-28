@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
     database: 'item',
 });
 
-const name = "nike airmax97";
+const name = "nike air force"; // 、nike airmax97、jordan、nike dunk
 const newName = name.replace(" ", "%20");
 // i 為第幾頁 momo從1開始
 // const i = 1;
@@ -59,7 +59,8 @@ async function main(newName, i) {
                 img: document.querySelector(path + " > a > div.prdImgWrap.prdListSwiper.swiper-container.manyPics.swiper-container-initialized.swiper-container-horizontal > div.swiper-wrapper > div.swiper-slide.swiper-slide-active > img").src,
                 name: document.querySelector(path + " > a > div.prdInfoWrap > div.prdNameTitle > h3").innerText,
                 price: document.querySelector(path + " > a > div.prdInfoWrap > p.money > span.price > b").innerText.replace(",", ""),
-                source: "https://i.ibb.co/NpC2tpx/momoshop.png"
+                source: "https://i.ibb.co/NpC2tpx/momoshop.png",
+                subtitle: ""
             };
             result.push(newItem);
         };
@@ -78,14 +79,14 @@ async function main(newName, i) {
 }
 
 (async () => {
-    for(let i = 1;i<2;i++){
+    for(let i = 1;i<3;i++){
 
         const dataList = await main(newName, i);
         dataList.forEach((element) => {
-            connection.query(`INSERT INTO itemdb (url,img,name,price,source) VALUES("${element.url}","${element.img}","${element.name}","${element.price}","${element.source}")`, function (error, results, fields) {
+            connection.query(`INSERT INTO shoes (url,img,name,price,source) VALUES("${element.url}","${element.img}","${element.name}","${element.price}","${element.source}")`, function (error, results, fields) {
                 if (error) throw error;
                 console.log(results);
-            });
+            }); 
         });
     }
     connection.end();
