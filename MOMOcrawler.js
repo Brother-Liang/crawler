@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
     database: 'item',
 });
 
-const name = "nike air force"; // 、nike airmax97、jordan、nike dunk
+const name = "nike air force"; // 、nike airmax97、jordan、nike dunk、nike air force
 const newName = name.replace(" ", "%20");
 // i 為第幾頁 momo從1開始
 // const i = 1;
@@ -22,6 +22,7 @@ function delay(time) {
 async function main(newName, i) {
     const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
+    await page.setViewport({ width: 1920, height: 1080 });
     const shopurl = "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=" + newName + "&searchType=1&curPage=" + i + "&_isFuzzy=0&showType=chessboardType";
 
     await page.goto(shopurl, { waitUntil: 'networkidle2' });
@@ -59,14 +60,17 @@ async function main(newName, i) {
                 img: document.querySelector(path + " > a > div.prdImgWrap.prdListSwiper.swiper-container.manyPics.swiper-container-initialized.swiper-container-horizontal > div.swiper-wrapper > div.swiper-slide.swiper-slide-active > img").src,
                 name: document.querySelector(path + " > a > div.prdInfoWrap > div.prdNameTitle > h3").innerText,
                 price: document.querySelector(path + " > a > div.prdInfoWrap > p.money > span.price > b").innerText.replace(",", ""),
-                source: "https://i.ibb.co/NpC2tpx/momoshop.png",
-                subtitle: ""
+                source: "momo購物網",
+                sourceimg:"https://i.ibb.co/NpC2tpx/momoshop.png",
+                subtitle: "",
+                type:""
             };
             result.push(newItem);
         };
 
         return result;
     });
+
     await delay(3000);
 
 
@@ -79,11 +83,11 @@ async function main(newName, i) {
 }
 
 (async () => {
-    for(let i = 1;i<3;i++){
+    for(let i = 1;i<2;i++){
 
         const dataList = await main(newName, i);
         dataList.forEach((element) => {
-            connection.query(`INSERT INTO shoes (url,img,name,price,source) VALUES("${element.url}","${element.img}","${element.name}","${element.price}","${element.source}")`, function (error, results, fields) {
+            connection.query(`INSERT INTO sneakers (url,img,name,price,source,sourceimg,subtitle,type) VALUES("${element.url}","${element.img}","${element.name}","${element.price}","${element.source}","${element.sourceimg}","${element.subtitle}","${element.type}")`, function (error, results, fields) {
                 if (error) throw error;
                 console.log(results);
             }); 

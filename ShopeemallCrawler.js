@@ -78,7 +78,9 @@ async function main(newName, j) {
                 img: document.querySelector(url + "> div > div > div:nth-child(1) > div > img").src,
                 name: document.querySelector(url + "> div > div > div.KMyn8J > div.dpiR4u > div.FDn--\\+ > div").innerText.replace(/"/g, ' ').replace(/[\u0800-\uFFFF]/g, ''),
                 price: document.querySelector(url + "> div > div > div.KMyn8J > div.hpDKMN > div.vioxXd.rVLWG6 > span.ZEgDH9").innerText.replace(",", ""),
-                source: "https://i.ibb.co/F7766Bz/image.png",
+                sourceimg: "https://i.ibb.co/F7766Bz/image.png",
+                source: "蝦皮商城",
+                type : "",
                 subtitle: ""
             };
             result.push(newsItem);
@@ -104,7 +106,7 @@ async function main(newName, j) {
 
         const dataList = await main(newName, j);
         dataList.forEach((element) => {
-            connection.query(`INSERT INTO shoes (url,img,name,price,source) VALUES("${element.url}","${element.img}","${element.name}","${element.price}","${element.source}")`, function (error, results, fields) {
+            connection.query(`INSERT INTO sneakers (url,img,name,price,source) VALUES("${element.url}","${element.img}","${element.name}","${element.price}","${element.source}")`, function (error, results, fields) {
                 if (error) throw error;
                 console.log(results);
             });
