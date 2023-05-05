@@ -22,11 +22,12 @@ function delay(time) {
 async function main(newName, i) {
     const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
+    console.log('開啟瀏覽器');
     await page.setViewport({ width: 1920, height: 1080 });
     const shopurl = "https://www.momoshop.com.tw/search/searchShop.jsp?keyword=" + newName + "&searchType=1&curPage=" + i + "&_isFuzzy=0&showType=chessboardType";
 
+    console.log('前往指定的網頁')
     await page.goto(shopurl, { waitUntil: 'networkidle2' });
-
     await delay(1000);
     // ...scraping code here...
     const elem = await page.$('div');
@@ -83,15 +84,18 @@ async function main(newName, i) {
 }
 
 (async () => {
-    for(let i = 1;i<2;i++){
+    for(let i = 2;i<3;i++){
 
         const dataList = await main(newName, i);
         dataList.forEach((element) => {
             connection.query(`INSERT INTO sneakers (url,img,name,price,source,sourceimg,subtitle,type) VALUES("${element.url}","${element.img}","${element.name}","${element.price}","${element.source}","${element.sourceimg}","${element.subtitle}","${element.type}")`, function (error, results, fields) {
+
                 if (error) throw error;
-                console.log(results);
+                console.log('資料庫新增成功');
+                // console.log(results);
             }); 
         });
     }
+    
     connection.end();
 })();
